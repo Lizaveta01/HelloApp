@@ -5,8 +5,10 @@ import { Colors } from './constants';
 export const GlobalStyle = createGlobalStyle`
     ${normalize}
     body{
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Helvetica', 'Arial', sans-serif;
         color: ${Colors.BLACK};
-        /* background-color: ${Colors.BLACK}; */
+    }
+    a {
+        text-decoration: none;
     }
 `;
