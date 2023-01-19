@@ -1,20 +1,16 @@
 import React from 'react';
-import { ButtonContainer, Title, Wrapper } from './HomePage.styled';
-import Button from '@mui/material/Button';
-import { NavLink } from 'react-router-dom';
+import { TextContainer, Wrapper } from './HomePage.styled';
 
 const HomePage = () => {
     return (
         <Wrapper>
-            <Title>Welcome to Hello App</Title>
-            <ButtonContainer>
-                <NavLink to="signIn">
-                    <Button variant="contained">Sign In</Button>{' '}
-                </NavLink>
-                <NavLink to="signUp">
-                    <Button variant="contained">Sign Up</Button>
-                </NavLink>
-            </ButtonContainer>
+            <TextContainer>
+                <h2>Welcome to Hello App</h2>
+                <p>
+                    Applications that allow you to view the table of all registered users, block and
+                    delete them
+                </p>
+            </TextContainer>
         </Wrapper>
     );
 };

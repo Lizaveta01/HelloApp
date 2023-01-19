@@ -10,4 +10,5 @@ export const Wrapper = styled.div`
 export const Title = styled.h1`
     margin-top: 40px;
     font-size: 40px;
+    font-weight: 400;
 `;

@@ -6,20 +6,20 @@ export const Wrapper = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    padding-top: 100px;
 `;
 
-export const Title = styled.h1`
-    margin-top: 40px;
-    font-size: 40px;
-    font-weight: 400;
-`;
-export const ButtonContainer = styled.h1`
+export const TextContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    gap: 40px;
-    background-color: gray;
-    border-radius: 8px;
-    padding: 16px 128px;
+    h2 {
+        font-size: 40px;
+        font-weight: 400;
+    }
+    p {
+        font-size: 20px;
+        font-weight: 400;
+    }
 `;

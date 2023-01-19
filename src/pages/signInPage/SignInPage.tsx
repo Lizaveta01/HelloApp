@@ -10,6 +10,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useForm } from 'react-hook-form';
+import { authorizationSwitch } from '../../store/userSlice/userSlice';
+import { useAppDispatch } from '../../hooks/hooks';
 
 const SignInPage = () => {
     const {
@@ -19,11 +21,13 @@ const SignInPage = () => {
     } = useForm({
         mode: 'onBlur',
     });
+    const dispatch = useAppDispatch();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onSubmit = (data: any) => {
         // eslint-disable-next-line no-console
         console.log(data);
+        dispatch(authorizationSwitch());
     };
 
     return (
@@ -62,7 +66,7 @@ const SignInPage = () => {
                         required
                         fullWidth
                         id="email"
-                        label="Email Address"
+                        label="Email"
                         name="email"
                         autoComplete="email"
                         error={Boolean(errors.email)}
