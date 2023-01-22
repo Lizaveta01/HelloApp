@@ -1,10 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loginUser } from '../../service/auth/signIn';
-import { initialState } from './initialState';
+import { createSlice } from '@reduxjs/toolkit';
 
-export const loginUserThunk = createAsyncThunk('user/login', (data: ILogInData) => {
-    return loginUser(data);
-});
+import { initialState } from './initialState';
 
 const userSlice = createSlice({
     name: 'user',

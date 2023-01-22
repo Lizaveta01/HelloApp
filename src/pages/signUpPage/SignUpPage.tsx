@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useForm } from 'react-hook-form';
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,25 +11,25 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { useForm } from 'react-hook-form';
+
 import { useAppDispatch } from '../../hooks/hooks';
-import { authorizationSwitch } from '../../store/userSlice/userSlice';
+import { registrationUser } from '../../service/asyncThunks';
+import { IRegistrationData } from '../../models/responseData';
 
 const SignUpPage = () => {
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm({
+    } = useForm<IRegistrationData>({
         mode: 'onBlur',
     });
     const dispatch = useAppDispatch();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const onSubmit = (data: any) => {
+    const onSubmit = (data: IRegistrationData) => {
         // eslint-disable-next-line no-console
         console.log(data);
-        dispatch(authorizationSwitch());
+        dispatch(registrationUser(data));
     };
 
     return (
