@@ -19,17 +19,25 @@ export const Header = () => {
             <ButtonContainer>
                 {isAuthorized ? (
                     <React.Fragment>
-                        <Button variant="contained" onClick={() => dispatch(authorizationSwitch())}>
+                        <Button
+                            variant="contained"
+                            size="small"
+                            onClick={() => dispatch(authorizationSwitch())}
+                        >
                             Log Out
                         </Button>
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
                         <NavLink to="signIn">
-                            <Button variant="contained">Sign In</Button>
+                            <Button variant="contained" size="small">
+                                Sign In
+                            </Button>
                         </NavLink>
                         <NavLink to="signUp">
-                            <Button variant="contained">Sign Up</Button>
+                            <Button variant="contained" size="small">
+                                Sign Up
+                            </Button>
                         </NavLink>
                     </React.Fragment>
                 )}

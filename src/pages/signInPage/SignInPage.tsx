@@ -10,8 +10,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useForm } from 'react-hook-form';
-import { authorizationSwitch } from '../../store/userSlice/userSlice';
+import { authorizationSwitch, loginUserThunk } from '../../store/userSlice/userSlice';
 import { useAppDispatch } from '../../hooks/hooks';
+import { ISignInData } from '../../models/responseData';
 
 const SignInPage = () => {
     const {
@@ -24,9 +25,10 @@ const SignInPage = () => {
     const dispatch = useAppDispatch();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const onSubmit = (data: any) => {
+    const onSubmit = (data: ISignInData) => {
         // eslint-disable-next-line no-console
         console.log(data);
+        dispatch(loginUserThunk(data));
         dispatch(authorizationSwitch());
     };
 
