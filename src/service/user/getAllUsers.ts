@@ -1,25 +1,22 @@
+import { IUser } from '../../models/responseData';
+import { store } from '../../store/store';
+import { setUsers } from '../../store/userSlice/userSlice';
+import { getCookie } from '../../utils/cookie/getCookie';
+import { path, requests } from '../constants';
 
+export const getAllUsers = async (): Promise<IUser[]> => {
+    const { TYPE, GET } = requests;
+    const { dispatch } = store;
 
-/* MODELS */
-import { TAllRegistredUser } from '../models/IInputData';
-import { path, requests } from '../models/requests';
-import { setUsers } from '../slices/userSlice/userSlice';
-import { store } from '../store/store';
-import { getCookie } from '../utils/cookie/getCookie';
+    const request = await fetch(`${path.users}`, {
+        method: `${GET}`,
+        headers: {
+            accept: `${TYPE}`,
+            Authorization: `Bearer ${getCookie('HELLOAPP_USER_TOKEN')}`,
+        },
+    });
 
-export const getAllUsers = async (): Promise<TAllRegistredUser> => {
-  const { TYPE, GET } = requests;
-  const { dispatch } = store;
-
-  const request = await fetch(`${path.users}`, {
-    method: `${GET}`,
-    headers: {
-      accept: `${TYPE}`,
-      Authorization: `Bearer ${getCookie('TASKBAN_USER_TOKEN')}`,
-    },
-  });
-
-  const responce: TAllRegistredUser = await request.json();
-  dispatch(setUsers(responce));
-  return responce;
+    const responce: IUser[] = await request.json();
+    dispatch(setUsers(responce));
+    return responce;
 };
