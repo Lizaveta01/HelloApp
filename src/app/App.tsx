@@ -10,22 +10,16 @@ import { GlobalStyle } from '../styles/global';
 import { theme } from '../styles/theme';
 import { PrivateRoute } from '../utils/PrivateRoutes';
 import { Header } from '../components/header/Header';
-import { useAppSelector } from '../hooks/hooks';
 
 const App = () => {
-    const { isAuthorized } = useAppSelector((state) => {
-        return {
-            isAuthorized: state.userSlice.isAuthorized,
-        };
-    });
-
+    // const isAuthorized = !!localStorage.getItem('token');
     return (
         <>
             <ThemeProvider theme={theme}>
                 <GlobalStyle />
                 <Header />
                 <Routes>
-                    <Route
+                    {/* <Route
                         path="signIn"
                         element={
                             <PrivateRoute user={!isAuthorized} redirectPath="/users">
@@ -40,15 +34,18 @@ const App = () => {
                                 <SignUpPage />
                             </PrivateRoute>
                         }
-                    />
-                    <Route
+                    /> */}
+                    {/* <Route
                         path="/users"
                         element={
                             <PrivateRoute user={isAuthorized} redirectPath="/">
                                 <UsersPage />
                             </PrivateRoute>
                         }
-                    />
+                    /> */}
+                    <Route path="/signIn" element={<SignInPage />} />
+                    <Route path="/signUp" element={<SignUpPage />} />
+                    <Route path="/users" element={<UsersPage />} />
                     <Route path="/" element={<HomePage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>

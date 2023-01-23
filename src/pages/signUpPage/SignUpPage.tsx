@@ -12,11 +12,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
-import { useAppDispatch } from '../../hooks/hooks';
-import { registrationUser } from '../../service/asyncThunks';
 import { IRegistrationData } from '../../models/responseData';
+import { createUser } from '../../service/auth/createUser';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpPage = () => {
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -24,13 +25,18 @@ const SignUpPage = () => {
     } = useForm<IRegistrationData>({
         mode: 'onBlur',
     });
-    const dispatch = useAppDispatch();
 
     const onSubmit = (data: IRegistrationData) => {
         // eslint-disable-next-line no-console
         console.log(data);
-        dispatch(registrationUser(data));
+        createUser(data).then(() => {
+            handleClick();
+        });
     };
+
+    function handleClick() {
+        navigate('/users');
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -59,15 +65,15 @@ const SignUpPage = () => {
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
-                                {...register('name', { required: 'Name is required' })}
-                                id="name"
-                                name="name"
+                                {...register('username', { required: 'Name is required' })}
+                                id="username"
+                                name="username"
                                 required
                                 fullWidth
                                 label="Name"
                                 autoFocus
-                                error={Boolean(errors.name)}
-                                helperText={errors.name?.message?.toString()}
+                                error={Boolean(errors.username)}
+                                helperText={errors.username?.message?.toString()}
                             />
                         </Grid>
                         <Grid item xs={12}>

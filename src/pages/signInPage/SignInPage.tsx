@@ -12,11 +12,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
-import { useAppDispatch } from '../../hooks/hooks';
 import { ISignInData } from '../../models/responseData';
-import { loginUserThunk } from '../../service/asyncThunks';
+import { loginUser } from '../../service/auth/loginUser';
+import { useNavigate } from 'react-router-dom';
 
 const SignInPage = () => {
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -24,13 +25,18 @@ const SignInPage = () => {
     } = useForm<ISignInData>({
         mode: 'onBlur',
     });
-    const dispatch = useAppDispatch();
 
     const onSubmit = (data: ISignInData) => {
         // eslint-disable-next-line no-console
         console.log(data);
-        dispatch(loginUserThunk(data));
+        loginUser(data).then(() => {
+            handleClick();
+        });
     };
+
+    function handleClick() {
+        navigate('/users');
+    }
 
     return (
         <Container component="main" maxWidth="xs">

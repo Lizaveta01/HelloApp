@@ -1,5 +1,5 @@
 export interface IRegistrationData {
-    name: string;
+    username: string;
     email: string;
     password: string;
 }
@@ -22,7 +22,7 @@ export interface IRegistredUser {
 }
 
 export interface IUser {
-    _id: string;
+    id: string;
     username: string;
     email: string;
     registerDate: string;
