@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
 import { ISignInData, ISignInDataResponse } from '../../models/responseData';
 import { path, requests } from '../constants';
+import { DateTime } from 'luxon';
 
 export const loginUser = async (data: ISignInData) => {
     const { SUCCESSFULL_REQUEST, TYPE, POST } = requests;
@@ -19,7 +21,9 @@ export const loginUser = async (data: ISignInData) => {
         console.log(`Error ${responce.statusCode}: ${responce.message}`);
         // showWarningMessage(`Error ${responce.statusCode}: ${responce.message}`);
     } else {
-        localStorage.setItem('token', responce.token);
-        localStorage.setItem('email', responce.email);
+        console.log(responce);
+        const loginDate = DateTime.now().toLocaleString();
+
+        localStorage.setItem('user', JSON.stringify(responce));
     }
 };

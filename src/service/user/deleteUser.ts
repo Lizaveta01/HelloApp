@@ -1,13 +1,19 @@
+/* eslint-disable no-console */
+import { ISignInDataResponse } from '../../models/responseData';
+import UsersPage from '../../pages/usersPage/UsersPage';
 import { path, requests } from '../constants';
 
-export const deleteUser = async (id: string) => {
+export const deleteUser = async (userId: string) => {
     const { TYPE, DELETE } = requests;
+    const user: ISignInDataResponse = JSON.parse(localStorage.getItem('user') || '{}');
 
-    const request = await fetch(`${path.users}/${id}`, {
+    const request = await fetch(`${path.users}/${userId}`, {
         method: `${DELETE}`,
         headers: {
             accept: `${TYPE}`,
-            Authorization: `${localStorage.getItem('token')}`,
+            Authorization: `${user.token}`,
         },
     });
+    const responce = await request.json();
+    console.log('responce', responce);
 };

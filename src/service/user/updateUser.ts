@@ -1,17 +1,19 @@
-import { IUser } from '../../models/responseData';
+/* eslint-disable no-console */
+import { ISignInDataResponse, IUser } from '../../models/responseData';
 import { path, requests } from '../constants';
 
-export const updateUser = async (id: string, status: string): Promise<IUser> => {
+export const updateUser = async (id: string, data: unknown): Promise<IUser> => {
     const { TYPE, PATCH } = requests;
+    const user: ISignInDataResponse = JSON.parse(localStorage.getItem('user') || '{}');
 
-    const data = {
-        status: status,
-    };
+    console.log(JSON.stringify(data));
+
     const request = await fetch(`${path.users}/${id}`, {
         method: `${PATCH}`,
         headers: {
             accept: `${TYPE}`,
-            Authorization: `${localStorage.getItem('token')}`,
+            'Content-Type': `${TYPE}`,
+            Authorization: `${user.token}`,
         },
         body: JSON.stringify(data),
     });

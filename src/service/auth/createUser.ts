@@ -1,8 +1,10 @@
-import { IRegistrationData, IRegistredUser } from '../../models/responseData';
+/* eslint-disable no-console */
+import { DateTime } from 'luxon';
+import { IRegistrationData, IRegistrationDataResponse } from '../../models/responseData';
 import { path, requests } from '../constants';
 import { loginUser } from './loginUser';
 
-export const createUser = async (data: IRegistrationData): Promise<IRegistredUser> => {
+export const createUser = async (data: IRegistrationData): Promise<IRegistrationDataResponse> => {
     const { TYPE, SUCCESSFULL_REQUEST, POST } = requests;
     const request = await fetch(`${path.signup}`, {
         method: `${POST}`,
@@ -13,14 +15,14 @@ export const createUser = async (data: IRegistrationData): Promise<IRegistredUse
         body: JSON.stringify(data),
     });
 
-    const responce: IRegistredUser = await request.json();
+    const responce: IRegistrationDataResponse = await request.json();
 
     if (request.status !== SUCCESSFULL_REQUEST) {
         // eslint-disable-next-line no-console
         console.log(`Error ${responce?.statusCode}: ${responce.message}`);
         // showWarningMessage(`Error ${responce.statusCode}: ${responce.message}`);
     } else {
-        loginUser({ email: data.email, password: data.password });
+        loginUser({ id: responce.id, email: data.email, password: data.password });
     }
     return responce;
 };

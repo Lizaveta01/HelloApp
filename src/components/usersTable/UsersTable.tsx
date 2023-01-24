@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from 'react';
 
 import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridSelectionModel } from '@mui/x-data-grid';
 import { getAllUsers } from '../../service/user/getAllUsers';
 import { columns } from './dataForTable';
 import { IUser } from '../../models/responseData';
 
-const UsersTable = () => {
-    const [users, setUsers] = useState<IUser[] | []>([]);
+type props = {
+    getUsers: (users: string[]) => void;
+    users: IUser[];
+};
 
-    useEffect(() => onRequest(), []);
+const UsersTable = ({ getUsers, users }: props) => {
+    const [selectionModel, setSelectionModel] = useState<string[] | GridSelectionModel>([]);
 
-    const onRequest = () => {
-        getAllUsers().then((users) => setUsers(users));
-    };
+    useEffect(() => {
+        // eslint-disable-next-line no-console
+        console.log(selectionModel);
+        getUsers(selectionModel as string[]);
+    }, [selectionModel]);
 
     return (
         <Box sx={{ height: 400, width: '70%' }}>
@@ -21,10 +26,11 @@ const UsersTable = () => {
                 rows={users}
                 columns={columns}
                 pageSize={5}
-                rowsPerPageOptions={[10]}
-                checkboxSelection
-                disableSelectionOnClick
+                rowsPerPageOptions={[5]}
                 experimentalFeatures={{ newEditingApi: true }}
+                onSelectionModelChange={(newSelectionModel) => setSelectionModel(newSelectionModel)}
+                selectionModel={selectionModel}
+                checkboxSelection
             />
         </Box>
     );

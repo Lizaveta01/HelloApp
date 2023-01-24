@@ -8,7 +8,7 @@ export const Header = () => {
     const logout = () => {
         // eslint-disable-next-line no-console
         console.log('click');
-        localStorage.setItem('token', '');
+        localStorage.setItem('user', '');
     };
     return (
         <HeaderWrapper>
