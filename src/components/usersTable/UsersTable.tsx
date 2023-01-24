@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import { DataGrid, GridSelectionModel } from '@mui/x-data-grid';
-import { getAllUsers } from '../../service/user/getAllUsers';
 import { columns } from './dataForTable';
 import { IUser } from '../../models/responseData';
 
@@ -15,8 +14,6 @@ const UsersTable = ({ getUsers, users }: props) => {
     const [selectionModel, setSelectionModel] = useState<string[] | GridSelectionModel>([]);
 
     useEffect(() => {
-        // eslint-disable-next-line no-console
-        console.log(selectionModel);
         getUsers(selectionModel as string[]);
     }, [selectionModel]);
 

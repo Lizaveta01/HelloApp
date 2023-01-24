@@ -1,49 +1,42 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import ToolBar from '../../components/toolBar/ToolBar';
 import UsersTable from '../../components/usersTable/UsersTable';
+import { useAppSelector } from '../../hooks/storeHooks';
 
-import { ISignInDataResponse, IUser } from '../../models/responseData';
+import { ISignInDataResponse } from '../../models/responseData';
 
 import { deleteUser } from '../../service/user/deleteUser';
 import { getAllUsers } from '../../service/user/getAllUsers';
 import { updateUser } from '../../service/user/updateUser';
+import { checkUser } from '../../utils/checkUser';
 
 import { Title, Wrapper } from './UsersPage.styled';
 
 const UsersPage = () => {
-    const [users, setUsers] = useState<IUser[] | []>([]);
+    const { allUsers } = useAppSelector((state) => {
+        return {
+            allUsers: state.userSlice.allUsers,
+        };
+    });
+    const notify = () => toast.info('Wow so easy !');
     const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-    const navigate = useNavigate();
-    const user: ISignInDataResponse = JSON.parse(localStorage.getItem('user') || '{}');
+    const currentUser: ISignInDataResponse = JSON.parse(localStorage.getItem('user') || '{}');
 
     useEffect(() => {
-        if (user) {
-            onRequest();
-        }
-    });
+        getAllUsers();
+    }, [allUsers]);
 
-    const onRequest = () => {
-        getAllUsers().then((users) => setUsers(users));
-    };
-
-    const handlerDeleteUser = (usersId: string[]) => {
-        usersId.map((singleUser: string) => {
+    const handlerDeleteUser = (selectedUsers: string[]) => {
+        selectedUsers.map((singleUser: string) => {
             deleteUser(singleUser);
         });
 
-        checkUser(usersId);
+        checkUser(selectedUsers, currentUser.id);
     };
 
-    function checkUser(users: string[]) {
-        // console.log('users', users, 'you', user.id);
-        if (users.includes(user.id)) {
-            console.log('has your id');
-            navigate('/');
-        }
-    }
     const blockUser = (usersId: string[]) => {
         const updatedStatus = {
             status: 'blocked',
@@ -52,7 +45,7 @@ const UsersPage = () => {
             updateUser(singleUser, updatedStatus);
         });
 
-        // checkUser(usersId);
+        checkUser(selectedUsers, currentUser.id);
     };
 
     const unblockUser = (usersId: string[]) => {
@@ -76,9 +69,8 @@ const UsersPage = () => {
             <UsersTable
                 getUsers={(users) => {
                     setSelectedUsers(users);
-                    console.log('selected', selectedUsers);
                 }}
-                users={users}
+                users={allUsers}
             />
         </Wrapper>
     );

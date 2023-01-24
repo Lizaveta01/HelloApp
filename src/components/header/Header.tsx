@@ -1,47 +1,49 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Button from '@mui/material/Button';
+
 import { ButtonContainer, HeaderWrapper, Logo } from './Header.styled';
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
+import { authorizationSwitch } from '../../store/slice/userSlice';
 
 export const Header = () => {
-    const [isAuthorized, setIsAuthorized] = useState(false);
+    const dispatch = useAppDispatch();
+    const { isAuthorized } = useAppSelector((state) => {
+        return {
+            isAuthorized: state.userSlice.isAuthorized,
+        };
+    });
     const logout = () => {
-        // eslint-disable-next-line no-console
-        console.log('click');
-        localStorage.setItem('user', '');
+        dispatch(authorizationSwitch());
+        localStorage.removeItem('user');
     };
+
     return (
         <HeaderWrapper>
-            <Logo>HelloApp</Logo>
+            <NavLink to="/">
+                <Logo>HelloApp</Logo>
+            </NavLink>
             <ButtonContainer>
-                {/* {isAuthorized ? ( */}
-                {/* <React.Fragment>
-                    
-                </React.Fragment> */}
-                <Button
-                    variant="contained"
-                    size="small"
-                    onClick={() => {
-                        logout();
-                    }}
-                >
-                    Log Out
-                </Button>
-                {/* <button onClick={funck}>Log Out</button> */}
-                {/* ) : ( */}
-                <React.Fragment>
-                    <NavLink to="signIn">
-                        <Button variant="contained" size="small">
-                            Sign In
+                {isAuthorized ? (
+                    <React.Fragment>
+                        <Button variant="contained" size="small" onClick={() => logout()}>
+                            Log Out
                         </Button>
-                    </NavLink>
-                    <NavLink to="signUp">
-                        <Button variant="contained" size="small">
-                            Sign Up
-                        </Button>
-                    </NavLink>
-                </React.Fragment>
-                {/* )} */}
+                    </React.Fragment>
+                ) : (
+                    <React.Fragment>
+                        <NavLink to="signIn">
+                            <Button variant="contained" size="small">
+                                Sign In
+                            </Button>
+                        </NavLink>
+                        <NavLink to="signUp">
+                            <Button variant="contained" size="small">
+                                Sign Up
+                            </Button>
+                        </NavLink>
+                    </React.Fragment>
+                )}
             </ButtonContainer>
         </HeaderWrapper>
     );

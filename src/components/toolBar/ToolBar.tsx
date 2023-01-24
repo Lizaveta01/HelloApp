@@ -24,7 +24,6 @@ const ToolBar = ({ deleteUser, blockUser, unblockUser, users }: props) => {
                     <IconButton
                         onClick={() => {
                             blockUser(users);
-                            console.log('block');
                         }}
                     >
                         <BlockIcon color="primary" />
@@ -34,7 +33,6 @@ const ToolBar = ({ deleteUser, blockUser, unblockUser, users }: props) => {
                     <IconButton
                         onClick={() => {
                             unblockUser(users);
-                            console.log('unblock');
                         }}
                     >
                         <FaceIcon color="primary" />
@@ -44,7 +42,6 @@ const ToolBar = ({ deleteUser, blockUser, unblockUser, users }: props) => {
                     <IconButton
                         onClick={() => {
                             deleteUser(users);
-                            console.log('delete');
                         }}
                     >
                         <DeleteIcon color="primary" />

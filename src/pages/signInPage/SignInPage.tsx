@@ -14,10 +14,8 @@ import Container from '@mui/material/Container';
 
 import { ISignInData } from '../../models/responseData';
 import { loginUser } from '../../service/auth/loginUser';
-import { useNavigate } from 'react-router-dom';
 
 const SignInPage = () => {
-    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -27,16 +25,8 @@ const SignInPage = () => {
     });
 
     const onSubmit = (data: ISignInData) => {
-        // eslint-disable-next-line no-console
-        console.log(data);
-        loginUser(data).then(() => {
-            handleClick();
-        });
+        loginUser(data);
     };
-
-    function handleClick() {
-        navigate('/users');
-    }
 
     return (
         <Container component="main" maxWidth="xs">

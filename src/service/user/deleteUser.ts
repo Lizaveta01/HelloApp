@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import { ISignInDataResponse } from '../../models/responseData';
-import UsersPage from '../../pages/usersPage/UsersPage';
 import { path, requests } from '../constants';
 
 export const deleteUser = async (userId: string) => {
