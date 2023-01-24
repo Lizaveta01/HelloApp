@@ -21,7 +21,7 @@ const UsersPage = () => {
             allUsers: state.userSlice.allUsers,
         };
     });
-    const notify = () => toast.info('Wow so easy !');
+
     const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
     const currentUser: ISignInDataResponse = JSON.parse(localStorage.getItem('user') || '{}');
 
@@ -42,7 +42,13 @@ const UsersPage = () => {
             status: 'blocked',
         };
         usersId.map((singleUser: string) => {
-            updateUser(singleUser, updatedStatus);
+            updateUser(singleUser, updatedStatus)
+                .then(() => {
+                    // notify('Block successfully!');
+                })
+                .catch((error) => {
+                    // notify(error.message);
+                });
         });
 
         checkUser(selectedUsers, currentUser.id);

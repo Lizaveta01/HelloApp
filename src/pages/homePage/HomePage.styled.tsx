@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
     justify-content: center;
     flex-direction: column;
     padding-top: 100px;
+    gap: 40px;
 `;
 
 export const TextContainer = styled.div`
@@ -14,6 +15,7 @@ export const TextContainer = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    gap: 20px;
     h2 {
         font-size: 40px;
         font-weight: 400;

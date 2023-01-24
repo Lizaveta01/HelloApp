@@ -1,5 +1,8 @@
 import React from 'react';
+import Lottie from 'lottie-react';
+
 import { TextContainer, Wrapper } from './HomePage.styled';
+import tableImg from '../../assets/table.json';
 
 const HomePage = () => {
     return (
@@ -11,6 +14,7 @@ const HomePage = () => {
                     delete them
                 </p>
             </TextContainer>
+            <Lottie animationData={tableImg} loop={true} style={{ height: '50vh' }} />
         </Wrapper>
     );
 };
