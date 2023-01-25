@@ -11,8 +11,8 @@ export enum Requests {
     PATCH = 'PATCH',
 }
 
-// export const url = 'https://two6656.onrender.com';
-export const url = 'http://localhost:4000';
+export const url = 'https://two6656.onrender.com';
+// export const url = 'http://localhost:4000';
 
 export const path = {
     signup: `${url}/auth/signup`,

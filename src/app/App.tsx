@@ -5,7 +5,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import NotFoundPage from '../pages/404/NotFoundPage';
-import HomePage from '../pages/homePage/HomePage';
 import SignInPage from '../pages/signInPage/SignInPage';
 import SignUpPage from '../pages/signUpPage/SignUpPage';
 import UsersPage from '../pages/usersPage/UsersPage';
@@ -32,7 +31,7 @@ const App = () => {
                     <Route
                         path="signIn"
                         element={
-                            <PrivateRoute user={!isAuthorized} redirectPath="/users">
+                            <PrivateRoute user={!isAuthorized} redirectPath="/">
                                 <SignInPage />
                             </PrivateRoute>
                         }
@@ -40,20 +39,19 @@ const App = () => {
                     <Route
                         path="signUp"
                         element={
-                            <PrivateRoute user={!isAuthorized} redirectPath="/users">
+                            <PrivateRoute user={!isAuthorized} redirectPath="/">
                                 <SignUpPage />
                             </PrivateRoute>
                         }
                     />
                     <Route
-                        path="/users"
+                        path="/"
                         element={
-                            <PrivateRoute user={isAuthorized} redirectPath="/">
+                            <PrivateRoute user={isAuthorized} redirectPath="signIn">
                                 <UsersPage />
                             </PrivateRoute>
                         }
                     />
-                    <Route path="/" element={<HomePage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
                 <ToastContainer position="bottom-right" autoClose={2000} />
