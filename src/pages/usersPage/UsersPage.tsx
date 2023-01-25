@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable no-console */
+import React, { useCallback, useEffect, useState } from 'react';
 
 import ToolBar from '../../components/toolBar/ToolBar';
 import UsersTable from '../../components/usersTable/UsersTable';
@@ -20,9 +21,14 @@ const UsersPage = () => {
     const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
     const currentUser: ISignInDataResponse = JSON.parse(localStorage.getItem(USER) || '{}');
 
-    useEffect(() => {
+    console.log('qqq');
+    const fetching = useCallback(() => {
         getAllUsers();
-    }, [allUsers]);
+    }, []);
+
+    useEffect(() => {
+        fetching();
+    }, [fetching]);
 
     return (
         <Wrapper>

@@ -1,16 +1,20 @@
 import { ISignInDataResponse } from '../models/responseData';
 import { deleteUser } from '../service/user/deleteUser';
+import { getAllUsers } from '../service/user/getAllUsers';
 import { updateUser } from '../service/user/updateUser';
 import { checkUser } from './checkUser';
 import { Operations, Status } from '../constants';
+import { LocalStorageValue } from '../constants';
 
 const { BLOCK, UNBLOCK } = Operations;
 const { BLOCKED, ACTIVE } = Status;
-
-const currentUser: ISignInDataResponse = JSON.parse(localStorage.getItem('user') || '{}');
+const { USER } = LocalStorageValue;
 
 export const setUserOperation = (type: string, selectedUsers: string[]) => {
+    const currentUser: ISignInDataResponse = JSON.parse(localStorage.getItem(USER) || '{}');
     if (type !== UNBLOCK) {
+        // eslint-disable-next-line no-console
+        console.log('dfsfs');
         checkUser(selectedUsers, currentUser.id);
     }
 
@@ -19,22 +23,26 @@ export const setUserOperation = (type: string, selectedUsers: string[]) => {
             const updatedStatus = {
                 status: BLOCKED,
             };
-            return selectedUsers.map((singleUser: string) => {
+            selectedUsers.map((singleUser: string) => {
                 updateUser(singleUser, updatedStatus);
             });
+            break;
         }
         case UNBLOCK: {
             const updatedStatus = {
                 status: ACTIVE,
             };
-            return selectedUsers.map((singleUser: string) => {
+            selectedUsers.map((singleUser: string) => {
                 updateUser(singleUser, updatedStatus);
             });
+            break;
         }
         default: {
-            return selectedUsers.map((singleUser: string) => {
+            selectedUsers.map((singleUser: string) => {
                 deleteUser(singleUser);
             });
+            break;
         }
     }
+    getAllUsers();
 };

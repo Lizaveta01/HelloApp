@@ -5,6 +5,9 @@ import Button from '@mui/material/Button';
 import { ButtonContainer, HeaderWrapper, Logo } from './Header.styled';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { authorizationSwitch } from '../../store/slice/userSlice';
+import { LocalStorageValue } from '../../constants';
+
+const { USER } = LocalStorageValue;
 
 export const Header = () => {
     const dispatch = useAppDispatch();
@@ -16,7 +19,7 @@ export const Header = () => {
 
     const logout = () => {
         dispatch(authorizationSwitch());
-        localStorage.removeItem('user');
+        localStorage.removeItem(USER);
     };
 
     return (
