@@ -42,7 +42,7 @@ export const Header = () => {
                                 Sign In
                             </Button>
                         </NavLink>
-                        <NavLink to="signUp">
+                        <NavLink to="/signUp">
                             <Button variant="contained" size="small">
                                 Sign Up
                             </Button>

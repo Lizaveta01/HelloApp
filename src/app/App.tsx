@@ -37,7 +37,7 @@ const App = () => {
                         }
                     />
                     <Route
-                        path="signUp"
+                        path="/signUp"
                         element={
                             <PrivateRoute user={!isAuthorized} redirectPath="/users">
                                 <SignUpPage />
@@ -53,7 +53,6 @@ const App = () => {
                         }
                     />
                     <Route path="/" element={<SignInPage />} />
-                    <Route path="/signUp" element={<SignInPage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
                 <ToastContainer position="bottom-right" autoClose={2000} />
