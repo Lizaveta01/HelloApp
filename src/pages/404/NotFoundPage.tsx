@@ -1,8 +1,10 @@
 import React from 'react';
-import { Wrapper } from './NotFoundPage.styled';
-import Button from '@mui/material/Button';
 import { NavLink } from 'react-router-dom';
 import Lottie from 'lottie-react';
+
+import Button from '@mui/material/Button';
+import { Wrapper } from './NotFoundPage.styled';
+
 import notFound from '../../assets/404.json';
 
 const NotFoundPage = () => {

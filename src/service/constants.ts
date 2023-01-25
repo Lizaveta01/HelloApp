@@ -1,4 +1,4 @@
-export enum requests {
+export enum Requests {
     TYPE = 'application/json',
     SUCCESSFULL_REQUEST = 200,
     WARNING_MESSAGE_DURATION = 5000,

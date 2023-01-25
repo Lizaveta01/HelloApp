@@ -1,12 +1,15 @@
 import { ISignInDataResponse, IUser } from '../../models/responseData';
 import { setAllUsers } from '../../store/slice/userSlice';
 import { store } from '../../store/store';
-import { path, requests } from '../constants';
+import { path, Requests } from '../constants';
+import { LocalStorageValue } from '../../constants';
+
+const { TYPE, GET } = Requests;
+const { USER } = LocalStorageValue;
 
 export const getAllUsers = async (): Promise<IUser[]> => {
-    const { TYPE, GET } = requests;
     const { dispatch } = store;
-    const user: ISignInDataResponse = JSON.parse(localStorage.getItem('user') || '{}');
+    const user: ISignInDataResponse = JSON.parse(localStorage.getItem(USER) || '{}');
 
     const request = await fetch(`${path.users}`, {
         method: `${GET}`,
@@ -15,8 +18,8 @@ export const getAllUsers = async (): Promise<IUser[]> => {
             Authorization: `${user.token}`,
         },
     });
-
     const responce: IUser[] = await request.json();
+
     dispatch(setAllUsers(responce));
     return responce;
 };

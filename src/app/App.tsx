@@ -1,6 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import NotFoundPage from '../pages/404/NotFoundPage';
 import HomePage from '../pages/homePage/HomePage';
@@ -11,11 +13,8 @@ import { Header } from '../components/header/Header';
 
 import { GlobalStyle } from '../styles/global';
 import { theme } from '../styles/theme';
-import { PrivateRoute } from '../utils/PrivateRoutes';
+import { PrivateRoute } from '../utils/privateRoutes';
 import { useAppSelector } from '../hooks/storeHooks';
-
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
     const { isAuthorized } = useAppSelector((state) => {
@@ -23,6 +22,7 @@ const App = () => {
             isAuthorized: state.userSlice.isAuthorized,
         };
     });
+
     return (
         <>
             <ThemeProvider theme={theme}>
@@ -56,7 +56,7 @@ const App = () => {
                     <Route path="/" element={<HomePage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
-                <ToastContainer position="bottom-right" />
+                <ToastContainer position="bottom-right" autoClose={2000} />
             </ThemeProvider>
         </>
     );

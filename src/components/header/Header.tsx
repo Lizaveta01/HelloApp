@@ -13,6 +13,7 @@ export const Header = () => {
             isAuthorized: state.userSlice.isAuthorized,
         };
     });
+
     const logout = () => {
         dispatch(authorizationSwitch());
         localStorage.removeItem('user');
@@ -26,6 +27,7 @@ export const Header = () => {
             <ButtonContainer>
                 {isAuthorized ? (
                     <React.Fragment>
+                        <NavLink to="/users">Table</NavLink>
                         <Button variant="contained" size="small" onClick={() => logout()}>
                             Log Out
                         </Button>

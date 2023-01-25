@@ -1,6 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
-import { Colors } from './constants';
 
 export const GlobalStyle = createGlobalStyle`
     ${normalize}
@@ -52,7 +51,6 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     font-size: 18px;
     font-family: 'Helvetica', 'Arial', sans-serif;
-        color: ${Colors.BLACK};
   }
   input[type="text"],
   input[type="search"] input[type="email"],

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import { DataGrid, GridSelectionModel } from '@mui/x-data-grid';
+
 import { columns } from './dataForTable';
 import { IUser } from '../../models/responseData';
 
@@ -18,12 +19,12 @@ const UsersTable = ({ getUsers, users }: props) => {
     }, [selectionModel]);
 
     return (
-        <Box sx={{ height: 400, width: '70%' }}>
+        <Box sx={{ height: 600, width: '70%' }}>
             <DataGrid
                 rows={users}
                 columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
                 experimentalFeatures={{ newEditingApi: true }}
                 onSelectionModelChange={(newSelectionModel) => setSelectionModel(newSelectionModel)}
                 selectionModel={selectionModel}

@@ -1,9 +1,14 @@
-import { ISignInDataResponse, IUser } from '../../models/responseData';
-import { path, requests } from '../constants';
+import { notification } from '../../utils/notify';
+import { ISignInDataResponse, IUpdateResponse } from '../../models/responseData';
+import { path, Requests } from '../constants';
+import { LocalStorageValue, NotificationType } from '../../constants';
 
-export const updateUser = async (id: string, data: unknown): Promise<IUser> => {
-    const { TYPE, PATCH, SUCCESSFULL_REQUEST } = requests;
-    const user: ISignInDataResponse = JSON.parse(localStorage.getItem('user') || '{}');
+const { TYPE, PATCH, SUCCESSFULL_REQUEST } = Requests;
+const { ERROR, SUCCESS } = NotificationType;
+const { USER } = LocalStorageValue;
+
+export const updateUser = async (id: string, data: unknown): Promise<IUpdateResponse> => {
+    const user: ISignInDataResponse = JSON.parse(localStorage.getItem(USER) || '{}');
 
     const request = await fetch(`${path.users}/${id}`, {
         method: `${PATCH}`,
@@ -15,9 +20,11 @@ export const updateUser = async (id: string, data: unknown): Promise<IUser> => {
         body: JSON.stringify(data),
     });
 
-    if (request.status === SUCCESSFULL_REQUEST) {
-        throw new Error(`Error ${request.status}`);
+    const responce: IUpdateResponse = await request.json();
+    if (request.status !== SUCCESSFULL_REQUEST) {
+        notification(ERROR, `${responce.message}`);
     }
-    const responce: IUser = await request.json();
+
+    notification(SUCCESS, `${responce.message} ${JSON.stringify(responce.user.username)}`);
     return responce;
 };

@@ -1,10 +1,14 @@
-/* eslint-disable no-console */
+import { notification } from '../../utils/notify';
 import { ISignInDataResponse } from '../../models/responseData';
-import { path, requests } from '../constants';
+import { path, Requests } from '../constants';
+import { LocalStorageValue, NotificationType } from '../../constants';
+
+const { TYPE, DELETE, SUCCESSFULL_REQUEST } = Requests;
+const { ERROR, SUCCESS } = NotificationType;
+const { USER } = LocalStorageValue;
 
 export const deleteUser = async (userId: string) => {
-    const { TYPE, DELETE } = requests;
-    const user: ISignInDataResponse = JSON.parse(localStorage.getItem('user') || '{}');
+    const user: ISignInDataResponse = JSON.parse(localStorage.getItem(USER) || '{}');
 
     const request = await fetch(`${path.users}/${userId}`, {
         method: `${DELETE}`,
@@ -14,5 +18,8 @@ export const deleteUser = async (userId: string) => {
         },
     });
     const responce = await request.json();
-    console.log('responce', responce);
+    if (request.status !== SUCCESSFULL_REQUEST) {
+        notification(ERROR, `${responce.message}`);
+    }
+    notification(SUCCESS, `${responce.message} ${JSON.stringify(responce.username)}`);
 };

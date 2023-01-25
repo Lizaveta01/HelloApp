@@ -10,7 +10,7 @@ const HomePage = () => {
             <TextContainer>
                 <h2>Welcome to Hello App</h2>
                 <p>
-                    Applications that allow you to view the table of all registered users, block and
+                    Application table allow you to view the table of all registered users, block and
                     delete them
                 </p>
             </TextContainer>

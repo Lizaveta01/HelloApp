@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     gap: 10px;
 `;
-export const ToolsButtom = styled.div`
+export const ToolButtoms = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;

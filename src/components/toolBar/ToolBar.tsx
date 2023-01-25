@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react';
 
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -6,48 +5,53 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import BlockIcon from '@mui/icons-material/Block';
 import FaceIcon from '@mui/icons-material/Face';
-import { ToolsButtom, Wrapper } from './ToolBar.styled';
+
+import { ToolButtoms, Wrapper } from './ToolBar.styled';
+import { setUserOperation } from '../../utils/userOperations';
+import { Operations } from '../../constants';
+
+const { BLOCK, UNBLOCK, DELETE } = Operations;
 
 type props = {
-    deleteUser: (usersId: string[]) => void;
-    blockUser: (usersId: string[]) => void;
-    unblockUser: (usersId: string[]) => void;
     users: string[];
 };
 
-const ToolBar = ({ deleteUser, blockUser, unblockUser, users }: props) => {
+const ToolBar = ({ users }: props) => {
     return (
         <Wrapper>
             <h3>Tools for manage</h3>
-            <ToolsButtom>
+
+            <ToolButtoms>
                 <Tooltip title="Block">
                     <IconButton
                         onClick={() => {
-                            blockUser(users);
+                            setUserOperation(BLOCK, users);
                         }}
                     >
                         <BlockIcon color="primary" />
                     </IconButton>
                 </Tooltip>
+
                 <Tooltip title="Unblock">
                     <IconButton
                         onClick={() => {
-                            unblockUser(users);
+                            setUserOperation(UNBLOCK, users);
                         }}
                     >
-                        <FaceIcon color="primary" />
+                        <FaceIcon color="primary" id="unblock" />
                     </IconButton>
                 </Tooltip>
+
                 <Tooltip title="Delete">
                     <IconButton
                         onClick={() => {
-                            deleteUser(users);
+                            setUserOperation(DELETE, users);
                         }}
                     >
                         <DeleteIcon color="primary" />
                     </IconButton>
                 </Tooltip>
-            </ToolsButtom>
+            </ToolButtoms>
         </Wrapper>
     );
 };
