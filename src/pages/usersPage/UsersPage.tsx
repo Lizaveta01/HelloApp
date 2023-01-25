@@ -21,10 +21,9 @@ const UsersPage = () => {
     const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
     const currentUser: ISignInDataResponse = JSON.parse(localStorage.getItem(USER) || '{}');
 
-    console.log('qqq');
     const fetching = useCallback(() => {
         getAllUsers();
-    }, []);
+    }, [allUsers]);
 
     useEffect(() => {
         fetching();

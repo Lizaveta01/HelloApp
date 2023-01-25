@@ -12,8 +12,8 @@ import { Header } from '../components/header/Header';
 
 import { GlobalStyle } from '../styles/global';
 import { theme } from '../styles/theme';
-import { PrivateRoute } from '../utils/privateRoutes';
 import { useAppSelector } from '../hooks/storeHooks';
+import { PrivateRoute } from '../utils/CustomPrivateRoutes';
 
 const App = () => {
     const { isAuthorized } = useAppSelector((state) => {

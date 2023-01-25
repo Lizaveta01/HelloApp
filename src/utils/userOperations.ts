@@ -13,8 +13,6 @@ const { USER } = LocalStorageValue;
 export const setUserOperation = (type: string, selectedUsers: string[]) => {
     const currentUser: ISignInDataResponse = JSON.parse(localStorage.getItem(USER) || '{}');
     if (type !== UNBLOCK) {
-        // eslint-disable-next-line no-console
-        console.log('dfsfs');
         checkUser(selectedUsers, currentUser.id);
     }
 
