@@ -21,5 +21,5 @@ export const deleteUser = async (userId: string) => {
     if (request.status !== SUCCESSFULL_REQUEST) {
         notification(ERROR, `${responce.message}`);
     }
-    notification(SUCCESS, `${responce.message} ${JSON.stringify(responce.username)}`);
+    notification(SUCCESS, `${responce.message}`);
 };

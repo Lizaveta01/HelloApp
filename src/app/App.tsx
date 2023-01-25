@@ -53,6 +53,8 @@ const App = () => {
                         }
                     />
                     <Route path="/" element={<SignInPage />} />
+                    <Route path="/signUp" element={<SignUpPage />} />
+                    <Route path="/users" element={<UsersPage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
                 <ToastContainer position="bottom-right" autoClose={2000} />
