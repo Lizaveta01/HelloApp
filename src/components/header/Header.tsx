@@ -37,7 +37,7 @@ export const Header = () => {
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
-                        <NavLink to="signIn">
+                        <NavLink to="/">
                             <Button variant="contained" size="small">
                                 Sign In
                             </Button>
