@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import ToolBar from '../../components/toolBar/ToolBar';
 import UsersTable from '../../components/usersTable/UsersTable';
@@ -9,25 +8,23 @@ import { ISignInDataResponse } from '../../models/responseData';
 import { getAllUsers } from '../../service/user/getAllUsers';
 import { TextContainer, Wrapper } from './UsersPage.styled';
 import { LocalStorageValue } from '../../constants';
+import Spinner from '../../components/spinner/Spinner';
 
 const { USER } = LocalStorageValue;
 
 const UsersPage = () => {
-    const { allUsers } = useAppSelector((state) => {
+    const { allUsers, isLoading } = useAppSelector((state) => {
         return {
             allUsers: state.userSlice.allUsers,
+            isLoading: state.userSlice.isLoading,
         };
     });
     const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
     const currentUser: ISignInDataResponse = JSON.parse(localStorage.getItem(USER) || '{}');
 
-    const fetching = useCallback(() => {
-        getAllUsers();
-    }, [allUsers]);
-
     useEffect(() => {
-        fetching();
-    }, [fetching]);
+        getAllUsers();
+    }, []);
 
     return (
         <Wrapper>
@@ -37,12 +34,16 @@ const UsersPage = () => {
             </TextContainer>
 
             <ToolBar users={selectedUsers} />
-            <UsersTable
-                getUsers={(users) => {
-                    setSelectedUsers(users);
-                }}
-                users={allUsers}
-            />
+            {isLoading ? (
+                <Spinner message={'Loading users... Please wait'} />
+            ) : (
+                <UsersTable
+                    getUsers={(users) => {
+                        setSelectedUsers(users);
+                    }}
+                    users={allUsers}
+                />
+            )}
         </Wrapper>
     );
 };

@@ -15,14 +15,15 @@ export const setUserOperation = (type: string, selectedUsers: string[]) => {
     if (type !== UNBLOCK) {
         checkUser(selectedUsers, currentUser.id);
     }
+    let promises;
 
     switch (type) {
         case BLOCK: {
             const updatedStatus = {
                 status: BLOCKED,
             };
-            selectedUsers.map((singleUser: string) => {
-                updateUser(singleUser, updatedStatus);
+            promises = selectedUsers.map((singleUser: string) => {
+                return updateUser(singleUser, updatedStatus);
             });
             break;
         }
@@ -30,17 +31,19 @@ export const setUserOperation = (type: string, selectedUsers: string[]) => {
             const updatedStatus = {
                 status: ACTIVE,
             };
-            selectedUsers.map((singleUser: string) => {
-                updateUser(singleUser, updatedStatus);
+            promises = selectedUsers.map((singleUser: string) => {
+                return updateUser(singleUser, updatedStatus);
             });
             break;
         }
         default: {
-            selectedUsers.map((singleUser: string) => {
-                deleteUser(singleUser);
+            promises = selectedUsers.map((singleUser: string) => {
+                return deleteUser(singleUser);
             });
             break;
         }
     }
-    getAllUsers();
+    Promise.all(promises).then(() => {
+        getAllUsers();
+    });
 };

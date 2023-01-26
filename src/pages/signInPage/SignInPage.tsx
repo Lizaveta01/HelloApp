@@ -14,6 +14,8 @@ import Container from '@mui/material/Container';
 
 import { ISignInData } from '../../models/responseData';
 import { loginUser } from '../../service/auth/loginUser';
+import { useAppSelector } from '../../hooks/storeHooks';
+import Spinner from '../../components/spinner/Spinner';
 
 const SignInPage = () => {
     const {
@@ -22,6 +24,12 @@ const SignInPage = () => {
         formState: { errors },
     } = useForm<ISignInData>({
         mode: 'onBlur',
+    });
+
+    const { isLoading } = useAppSelector((state) => {
+        return {
+            isLoading: state.userSlice.isLoading,
+        };
     });
 
     const onSubmit = (data: ISignInData) => {
@@ -39,59 +47,74 @@ const SignInPage = () => {
                     alignItems: 'center',
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign in
-                </Typography>
-                <Box
-                    component="form"
-                    onSubmit={handleSubmit(onSubmit)}
-                    noValidate
-                    autoComplete="off"
-                    sx={{ mt: 1 }}
-                >
-                    <TextField
-                        {...register('email', {
-                            required: 'Email is required',
-                            pattern: {
-                                value: /\S+@\S+\.\S+/,
-                                message: 'Entered value does not match email format',
-                            },
-                        })}
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email"
-                        name="email"
-                        autoComplete="email"
-                        error={Boolean(errors.email)}
-                        helperText={errors.email?.message?.toString()}
-                        autoFocus
+                {isLoading ? (
+                    <Spinner
+                        message={
+                            'Loading... Please wait, it may take some time if the server is sleeping'
+                        }
                     />
-                    <TextField
-                        {...register('password', { required: 'Password is required' })}
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        error={Boolean(errors.password)}
-                        helperText={errors.password?.message?.toString()}
-                    />
-                    <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                        Sign In
-                    </Button>
-                    <Grid container>
-                        <Link href="/signUp" variant="body2">
-                            {"Don't have an account? Sign Up"}
-                        </Link>
-                    </Grid>
-                </Box>
+                ) : (
+                    <React.Fragment>
+                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Sign in
+                        </Typography>
+                        <Box
+                            component="form"
+                            onSubmit={handleSubmit(onSubmit)}
+                            noValidate
+                            autoComplete="off"
+                            sx={{ mt: 1 }}
+                        >
+                            <TextField
+                                {...register('email', {
+                                    required: 'Email is required',
+                                    pattern: {
+                                        value: /\S+@\S+\.\S+/,
+                                        message: 'Entered value does not match email format',
+                                    },
+                                })}
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="email"
+                                label="Email"
+                                name="email"
+                                autoComplete="email"
+                                error={Boolean(errors.email)}
+                                helperText={errors.email?.message?.toString()}
+                                autoFocus
+                            />
+                            <TextField
+                                {...register('password', { required: 'Password is required' })}
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                error={Boolean(errors.password)}
+                                helperText={errors.password?.message?.toString()}
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                            >
+                                Sign In
+                            </Button>
+                            <Grid container>
+                                <Link href="/signUp" variant="body2">
+                                    {"Don't have an account? Sign Up"}
+                                </Link>
+                            </Grid>
+                        </Box>
+                    </React.Fragment>
+                )}
             </Box>
         </Container>
     );

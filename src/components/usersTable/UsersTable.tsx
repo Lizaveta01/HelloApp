@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid, GridSelectionModel } from '@mui/x-data-grid';
 
-import { columns } from './dataForTable';
+import { columns } from './constants';
 import { IUser } from '../../models/responseData';
 
 type props = {

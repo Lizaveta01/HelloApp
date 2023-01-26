@@ -2,6 +2,8 @@ import { notification } from '../../utils/notify';
 import { ISignInDataResponse, IUpdateResponse } from '../../models/responseData';
 import { path, Requests } from '../constants';
 import { LocalStorageValue, NotificationType } from '../../constants';
+import { store } from '../../store/store';
+import { setLoading } from '../../store/slice/userSlice';
 
 const { TYPE, PATCH, SUCCESSFULL_REQUEST } = Requests;
 const { ERROR, SUCCESS } = NotificationType;
@@ -9,6 +11,8 @@ const { USER } = LocalStorageValue;
 
 export const updateUser = async (id: string, data: unknown): Promise<IUpdateResponse> => {
     const user: ISignInDataResponse = JSON.parse(localStorage.getItem(USER) || '{}');
+    const { dispatch } = store;
+    dispatch(setLoading(true));
 
     const request = await fetch(`${path.users}/${id}`, {
         method: `${PATCH}`,

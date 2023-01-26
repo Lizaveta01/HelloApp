@@ -10,10 +10,14 @@ const userSlice = createSlice({
         },
         setAllUsers: (state, action) => {
             state.allUsers = action.payload;
+            state.isLoading = false;
+        },
+        setLoading: (state, action) => {
+            state.isLoading = action.payload;
         },
     },
 });
 
 const { actions, reducer } = userSlice;
-export const { authorizationSwitch, setAllUsers } = actions;
+export const { authorizationSwitch, setAllUsers, setLoading } = actions;
 export default reducer;

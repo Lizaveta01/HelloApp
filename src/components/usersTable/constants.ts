@@ -23,7 +23,7 @@ export const columns: GridColDef[] = [
     {
         field: 'lastLoginDate',
         headerName: 'Last login time',
-        width: 200,
+        width: 180,
         editable: true,
     },
     {

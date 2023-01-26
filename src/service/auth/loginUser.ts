@@ -1,5 +1,5 @@
 import { ISignInData, ISignInDataResponse } from '../../models/responseData';
-import { authorizationSwitch } from '../../store/slice/userSlice';
+import { authorizationSwitch, setLoading } from '../../store/slice/userSlice';
 import { store } from '../../store/store';
 import { notification } from '../../utils/notify';
 import { path, Requests } from '../constants';
@@ -11,6 +11,7 @@ const { USER } = LocalStorageValue;
 
 export const loginUser = async (data: ISignInData) => {
     const { dispatch } = store;
+    dispatch(setLoading(true));
 
     const request = await fetch(`${path.signin}`, {
         method: `${POST}`,
@@ -24,8 +25,10 @@ export const loginUser = async (data: ISignInData) => {
     const responce: ISignInDataResponse = await request.json();
 
     if (request.status !== SUCCESSFULL_REQUEST) {
-        return notification(ERROR, `${responce.message}`);
+        notification(ERROR, `${responce.message}`);
+        return dispatch(setLoading(false));
     }
     localStorage.setItem(USER, JSON.stringify(responce));
     dispatch(authorizationSwitch());
+    dispatch(setLoading(false));
 };
